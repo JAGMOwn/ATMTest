@@ -33,10 +33,10 @@ namespace BackEndDTO
 
     public class EstimatedDiameter
     {
-        public Kilometers km { get; set; }
-        public Meters m { get; set; }
-        public Miles mi { get; set; }
-        public Feet ft { get; set; }
+        public Kilometers kilometers { get; set; }
+        public Meters meters { get; set; }
+        public Miles miles { get; set; }
+        public Feet feet { get; set; }
     }
 
     public class ApproachData
