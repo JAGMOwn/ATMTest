@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackEndAPI", "BackEndAPI\BackEndAPI.csproj", "{4A93ABCF-FB8C-4832-AEFE-900A7AEF5C05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code", "Code", "{05497967-029E-4A6A-9C5F-43C23E36FCCC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{3D73EAED-954C-40A8-BB76-6E19C8020E25}"
+	ProjectSection(SolutionItems) = preProject
+		D:\Descargas\Atmira - Prueba NET.pdf = D:\Descargas\Atmira - Prueba NET.pdf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6FE8AAFC-E894-4470-AF65-22CA70B6A64D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackEndTests", "BackEndTests\BackEndTests.csproj", "{03177FF8-49E1-4044-B032-834C8686823D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A93ABCF-FB8C-4832-AEFE-900A7AEF5C05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A93ABCF-FB8C-4832-AEFE-900A7AEF5C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A93ABCF-FB8C-4832-AEFE-900A7AEF5C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A93ABCF-FB8C-4832-AEFE-900A7AEF5C05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03177FF8-49E1-4044-B032-834C8686823D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03177FF8-49E1-4044-B032-834C8686823D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03177FF8-49E1-4044-B032-834C8686823D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03177FF8-49E1-4044-B032-834C8686823D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4A93ABCF-FB8C-4832-AEFE-900A7AEF5C05} = {05497967-029E-4A6A-9C5F-43C23E36FCCC}
+		{03177FF8-49E1-4044-B032-834C8686823D} = {6FE8AAFC-E894-4470-AF65-22CA70B6A64D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C97F8B88-32EA-48E5-A514-10E86B78685B}
+	EndGlobalSection
+EndGlobal
