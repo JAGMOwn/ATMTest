@@ -22,8 +22,30 @@ namespace BackEndAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<string>> Get(string planet)
         {
-            string ret = string.Empty;
-            return ret;
+            string result = planet;
+            try
+            {
+                //¿Controlar que planeta sea la tierra (la web solo devuelve los de la tierra)? TODO
+                if (String.IsNullOrEmpty(planet) || string.IsNullOrWhiteSpace(planet))
+                {
+                    //Crear constantes con los valores de los mensajes a devolver
+                    _logger.LogError("Parámetro invalido", planet);
+                    result = "40X error";
+                }
+            }
+
+            catch(Exception exception)
+            {
+                _logger.LogCritical("Excepcion lanzada por el servidor", exception.Message);
+                result = $"40X error --> {exception.Message}";
+
+                if (!String.IsNullOrEmpty(exception.InnerException.Message))
+                {
+                    _logger.LogCritical($"Internal exception messaje {exception.InnerException.Message}", planet);
+                }                
+            }
+
+            return result;
         }
     }
 }

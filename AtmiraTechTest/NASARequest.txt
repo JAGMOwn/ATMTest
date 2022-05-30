@@ -1,0 +1,10 @@
+-- APIKEY = DEMO
+
+https://api.nasa.gov/neo/rest/v1/feed?start_date=2022-05-05&end_date=2022-05-05&api_key=DEMO_KEY
+
+--APIKEY = zdUP8ElJv1cehFM0rsZVSQN7uBVxlDnu4diHlLSb
+
+https://api.nasa.gov/neo/rest/v1/feed?start_date=2022-05-05&end_date=2022-05-05&api_key=zdUP8ElJv1cehFM0rsZVSQN7uBVxlDnu4diHlLSb
+
+--Formato de fechas para las peticiones
+		-> yyyy-mm-dd

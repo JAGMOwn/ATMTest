@@ -21,11 +21,11 @@ namespace BackEndTests
         {
 
             //Act
-            var ret = await _homeControllerTest.Get("someStringFirstTest");
+            var ret = await _homeControllerTest.Get("");
             string response = ret.Value;
 
             //Assert
-            Xunit.Assert.True(response == string.Empty);
+            Xunit.Assert.True(response == "40X error");
         }
         
     }

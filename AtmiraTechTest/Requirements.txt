@@ -1,0 +1,17 @@
+--Crear un endpoint que devuelva el top 3 de asteroides más grandes y con riesgo de impactar con un planeta dado en los proximos 7 días
+	-> Si no hay 3, devolver los que apliquen
+	-> Restricción 1, el parámetro planeta es obligatorio (para saber sobre que planeta buscar los asteroides).
+	-> Suponemos que son planetas del sistema solar, por lo que vamos a restringir los planetas.
+
+--Devolver un JSON que contenga el top 3 de los asteroides potencialmente peligrosos para un planeta dado, además, debe devolver 
+  algunos datos calculados del asteroide. Ejemplo:
+
+  {
+	"Response": {
+		"Nombre": "Nombre del asteroide",
+		"Diametro": "Tamaño medio del asteroide en Km (calculado)",
+		"Velociadad": "Velocidad de aproximación en Km/h",
+		"FechaAproximacion": "Fecha de aproximación al planeta",
+		"Planeta": "Planeta en peligro"
+	}
+}
