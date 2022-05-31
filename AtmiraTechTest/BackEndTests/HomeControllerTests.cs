@@ -1,4 +1,5 @@
 using BackEndAPI.Controllers;
+using BackEndConstant;
 using BackEndDTO.InternalResponse;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -20,7 +21,7 @@ namespace BackEndTests
         }
 
         [Fact]
-        public async Task Get_ShouldReturnErrorMessageWhenEmptyString()
+        public async Task GetShouldReturnErrorMessageWhenEmptyString()
         {
 
             //Act
@@ -28,11 +29,11 @@ namespace BackEndTests
             string response = ret.Value;
 
             //Assert
-            Xunit.Assert.True(response == "40X error");
+            Assert.True(response == Constants.EmptyOrNullParamsResponseMessage.NWEPARAM);
         }
 
         [Fact]
-        public async Task Get_ShouldReturnErrorMessageWhenNullParam()
+        public async Task GetShouldReturnErrorMessageWhenNullParam()
         {
 
             //Act
@@ -40,11 +41,11 @@ namespace BackEndTests
             string response = ret.Value;
 
             //Assert
-            Xunit.Assert.True(response == "40X error");
+            Assert.True(response == Constants.EmptyOrNullParamsResponseMessage.NWEPARAM);
         }
 
         [Fact]
-        public async Task Get_ShouldReturnAtLeastThreeObjects()
+        public async Task GetShouldReturnAtLeastThreeObjects()
         {
 
             //Act
@@ -52,7 +53,31 @@ namespace BackEndTests
             List<AtmiraResponseDTO> response = JsonConvert.DeserializeObject<List<AtmiraResponseDTO>>(ret.Value);
 
             //Assert
-            Xunit.Assert.True(response.Count <= 3);
+            Assert.True(response.Count <= 3);
+        }
+
+        [Fact]
+        public async Task GetShouldReturnNoErrorIfAnyAsteroidsExists()
+        {
+
+            //Act
+            var ret = await _homeControllerTest.Get("mars");
+            List<AtmiraResponseDTO> response = JsonConvert.DeserializeObject<List<AtmiraResponseDTO>>(ret.Value);
+
+            //Assert
+            Assert.True(response.Count <= 3);
+        }
+
+        [Fact]
+        public async Task GetShouldReturnForbidenPlanetError()
+        {
+
+            //Act
+            var ret = await _homeControllerTest.Get("asdfg");
+            string response = ret.Value;
+
+            //Assert
+            Assert.True(response == Constants.InvalidParamsResponseMessage.FORBIDENPLANET);
         }
 
     }

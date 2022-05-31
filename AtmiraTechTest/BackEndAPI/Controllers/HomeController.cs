@@ -1,5 +1,7 @@
-﻿using BackEndDTO;
+﻿using BackEndConstant;
+using BackEndDTO;
 using BackEndDTO.InternalResponse;
+using BackEndHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -29,58 +31,38 @@ namespace BackEndAPI.Controllers
             string result = planet;
             try
             {
-                //¿Controlar que planeta sea la tierra (la web solo devuelve los de la tierra)? TODO
-                if (String.IsNullOrEmpty(planet) || string.IsNullOrWhiteSpace(planet))
+                
+                if (String.IsNullOrEmpty(planet) || string.IsNullOrWhiteSpace(planet))                    
                 {
-                    //Crear constantes con los valores de los mensajes a devolver
+                    
                     _logger.LogError("Parámetro invalido", planet);
-                    result = "40X error";
+                    result = Constants.EmptyOrNullParamsResponseMessage.NWEPARAM;
                 }
                 else
                 {
-                    string startDate = DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd");
-                    string endDate = DateTime.Now.ToString("yyyy-MM-dd");
-
-                    string URL = $"https://api.nasa.gov/neo/rest/v1/feed?start_date={startDate}&end_date={endDate}&api_key=zdUP8ElJv1cehFM0rsZVSQN7uBVxlDnu4diHlLSb";
-                    HttpClient client = new HttpClient();
-                    HttpResponseMessage response = await client.GetAsync(URL);
-                    response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    NasaDTO rawData = JsonConvert.DeserializeObject<NasaDTO>(responseBody);
-                   
-                    
-                    List<AsteroidsData> candidateAsteroids = rawData.near_earth_objects.Values.SelectMany(sm => sm)
-                        .Where(w => w.is_potentially_hazardous_asteroid == true
-                                 && w.close_approach_data.ElementAt(0).orbiting_body.Equals(planet, StringComparison.OrdinalIgnoreCase))
-                        .ToList();
-                    List<AtmiraResponseDTO> listToReturn;
-                    if (candidateAsteroids.Count >= 3)
+                    if(!Constants.Params.ALLOWEDPLANETS.Contains(planet, StringComparer.OrdinalIgnoreCase))
                     {
-                        listToReturn = candidateAsteroids.OrderByDescending(obd => (obd.estimated_diameter.meters.estimated_diameter_max 
-                                                                                  + obd.estimated_diameter.meters.estimated_diameter_min) / 2)
-                            .Take(3)
-                            .GroupBy(gb => gb.neo_reference_id)
-                            .Select(s => s.FirstOrDefault().MapToAtmiraResponseDTO())
-                            .ToList();
+                        _logger.LogError("Parámetro invalido", planet);
+                        result = Constants.InvalidParamsResponseMessage.FORBIDENPLANET;
                     }
                     else
                     {
-                        listToReturn = candidateAsteroids.GroupBy(gb => gb.neo_reference_id)
-                            .Select(s => s.FirstOrDefault().MapToAtmiraResponseDTO())
-                            .ToList();
-                    }
-                    result = JsonConvert.SerializeObject(listToReturn);
+                        string NasaUrl = RouteHelpers.GetNasaRoute();
+                        NasaDTO nasaAsteroidsList = await HomeHelpers.GetNasaRequest(NasaUrl);
+                        List<AtmiraResponseDTO> top3LargeHazardousAsteroid = HomeHelpers.GetTop3LargeHazardousAsteroids(planet, nasaAsteroidsList);
+                        result = JsonConvert.SerializeObject(top3LargeHazardousAsteroid);
+                    }                                                                                                                       
                 }
             }
 
             catch (Exception exception)
             {
-                _logger.LogCritical("Excepcion lanzada por el servidor", exception.Message);
-                result = $"40X error --> {exception.Message}";
+                _logger.LogCritical("Server exception", exception.Message);
+                result = $"--> {exception.Message}";
 
                 if (!String.IsNullOrEmpty(exception.InnerException.Message))
                 {
-                    _logger.LogCritical($"Internal exception messaje {exception.InnerException.Message}", planet);
+                    _logger.LogCritical($"Internal server exception messaje {exception.InnerException.Message}", planet);
                 }
             }
 
